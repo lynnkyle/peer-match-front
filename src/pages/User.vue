@@ -1,9 +1,9 @@
 <script setup lang="ts">
+
 </script>
+
 <template>
-  <div>
-    index
-  </div>
+  User
 </template>
 
 <style scoped>

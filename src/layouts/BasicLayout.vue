@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import 'vant/es/toast/style'
-import {ref} from "vue";
 import {showToast} from "vant";
-import Index from "../pages/Index.vue";
-import Team from "../pages/Team.vue";
-const onClickLeft = () => alert('左')
-const onClickRight = () => alert('右')
-const active = ref('index');
+import {useRouter} from "vue-router";
+
+const router = useRouter()
+
+
+const onClickLeft = () => {
+  router.push("/")
+}
+const onClickRight = () => {
+  router.push("/search")
+}
 const onChange = (index: any) => showToast(`标签 ${index}`)
 </script>
 
@@ -21,17 +26,12 @@ const onChange = (index: any) => showToast(`标签 ${index}`)
     </template>
   </van-nav-bar>
   <div id="content">
-    <template v-if="active==='index'">
-      <Index/>
-    </template>
-    <template v-if="active==='team'">
-      <Team/>
-    </template>
+    <router-view></router-view>
   </div>
-  <van-tabbar v-model="active" @change="onChange">
-    <van-tabbar-item icon="home-o" name="index">主页</van-tabbar-item>
-    <van-tabbar-item icon="search" name="team">队伍</van-tabbar-item>
-    <van-tabbar-item icon="friends-o" name="user">个人</van-tabbar-item>
+  <van-tabbar route @change="onChange">
+    <van-tabbar-item icon="home-o" name="home" to="/">主页</van-tabbar-item>
+    <van-tabbar-item icon="search" name="team" to="/team">队伍</van-tabbar-item>
+    <van-tabbar-item icon="friends-o" name="user" to="/user">个人</van-tabbar-item>
   </van-tabbar>
 </template>
 

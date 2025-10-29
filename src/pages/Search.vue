@@ -1,19 +1,10 @@
 <script setup lang="ts">
 import {ref} from "vue"
 
-// van-search
-const value = ref('')
-const onSearch = (val) => {
-  val.flatMap(parentTag => parentTag?.children).filter()
-}
-const onCancel = () => {
-  activeIds.value = []
-}
-
 // van-tree-select
 const activeIds = ref([]);
 const activeIndex = ref(0);
-const tagsList = [
+const originTagsList = [
   {
     text: '性别',
     children: [
@@ -34,14 +25,35 @@ const tagsList = [
     ],
   }
 ];
-const doClose = (tag: any) => {
+const tagsList = ref(originTagsList)
+// van-search
+const searchText = ref('')
+const onSearch = (val) => {
+  tagsList.value = originTagsList.map((parentTag, index) => {
+    const copyTagsList = {...parentTag}
+    copyTagsList.children = parentTag.children.filter(item => {
+      if (item.text.includes(val)) {
+        activeIndex.value = index
+        return true
+      }
+      return false
+    })
+    return copyTagsList
+  })
+}
+const onCancel = () => {
+  activeIds.value = []
+  tagsList.value = originTagsList
+}
+// van-tag
+const doClose = (tag) => {
   activeIds.value = activeIds.value.filter(item => item !== tag)
 }
 </script>
 
 <template>
   <van-search
-      v-model="value"
+      v-model="searchText"
       placeholder="请输入要搜索的标签"
       wrap-with-form
       show-action

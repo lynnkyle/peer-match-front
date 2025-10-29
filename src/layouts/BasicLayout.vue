@@ -7,12 +7,12 @@ const router = useRouter()
 
 
 const onClickLeft = () => {
-  router.push("/")
+  router.back()
 }
 const onClickRight = () => {
   router.push("/search")
 }
-const onChange = (index: any) => showToast(`标签 ${index}`)
+const onChange = (index) => showToast(`标签 ${index}`)
 </script>
 
 <template>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import {ref} from "vue"
+import {useRouter} from "vue-router"
 
+const router = useRouter()
 // van-tree-select
 const activeIds = ref([]);
 const activeIndex = ref(0);
@@ -49,6 +51,16 @@ const onCancel = () => {
 const doClose = (tag) => {
   activeIds.value = activeIds.value.filter(item => item !== tag)
 }
+//
+const doSearch = () => {
+  router.push({
+    path: '/user/list',
+    query: {
+      tags: activeIds.value
+    }
+  })
+}
+
 </script>
 
 <template>
@@ -61,7 +73,7 @@ const doClose = (tag) => {
       @cancel="onCancel"
   />
   <van-divider content-position="left">已选标签</van-divider>
-  <div v-if="activeIds.length===0">请选择标签</div>
+  <div v-if="activeIds.length===0" style="padding: 12px">请选择标签</div>
   <van-row gutter="20">
     <van-col v-for="tag in activeIds" style="padding: 10px">
       <van-tag closeable size="medium" type="primary" @close="doClose(tag)">
@@ -70,11 +82,16 @@ const doClose = (tag) => {
     </van-col>
   </van-row>
   <van-divider content-position="left">选择标签</van-divider>
-  <van-tree-select
-      v-model:active-id="activeIds"
-      v-model:main-active-index="activeIndex"
-      :items="tagsList"
-  />
+  <div style="padding: 12px">
+    <van-tree-select
+        v-model:active-id="activeIds"
+        v-model:main-active-index="activeIndex"
+        :items="tagsList"
+    />
+  </div>
+  <div style="padding: 12px">
+    <van-button type="primary" block @click="doSearch">搜索</van-button>
+  </div>
 </template>
 <style scoped>
 

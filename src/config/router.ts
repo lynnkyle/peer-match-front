@@ -4,6 +4,7 @@ import Team from '../pages/Team.vue'
 import User from "../pages/User.vue"
 import Search from "../pages/Search.vue"
 import UserEdit from '../pages/UserEdit.vue'
+import SearchResult from '../pages/SearchResult.vue'
 
 
 const router = createRouter({
@@ -33,6 +34,11 @@ const router = createRouter({
             path: '/user/edit',
             name: 'userEdit',
             component: UserEdit
+        },
+        {
+            path: '/user/list',
+            name: 'userResult',
+            component: SearchResult
         }
     ],
 })

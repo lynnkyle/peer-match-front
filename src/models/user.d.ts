@@ -1,7 +1,7 @@
 export type UserType = {
     id?: number;
-    user_name?: string;
-    user_account?: string;
+    userName?: string;
+    userAccount?: string;
     avatarUrl?: string;
     gender?: number;
     phone?: string;
@@ -9,6 +9,7 @@ export type UserType = {
     user_role?: number;
     user_status?: number;
     code?: string;
+    profile?: string;
     tags?: string[];
     isDelete?: number;
     createTime?: Date;

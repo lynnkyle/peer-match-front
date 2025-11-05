@@ -27,14 +27,14 @@ const toEdit = (editLabel, editKey, editValue) => {
 </script>
 
 <template>
-  <van-cell title="昵称" is-link :value="user.userName" @click="toEdit('昵称','gender',user.userName)"/>
-  <van-cell title="账号" is-link :value="user.userAccount" @click="toEdit('账号','gender',user.userAccount)"/>
+  <van-cell title="昵称" is-link :value="user.userName" @click="toEdit('昵称','userName',user.userName)"/>
+  <van-cell title="账号" is-link :value="user.userAccount" @click="toEdit('账号','userAccount',user.userAccount)"/>
   <van-cell title="头像" is-link @click="toEdit('头像','gender',user.avatarUrl)">
     <img :src="user.avatarUrl" alt="" style="height: 48px"/>
   </van-cell>
   <van-cell title="性别" is-link :value="user.gender" @click="toEdit('性别','gender',user.gender)"/>
-  <van-cell title="手机号码" is-link :value="user.phone" @click="toEdit('手机号码','gender',user.phone)"/>
-  <van-cell title="邮箱" is-link :value="user.email" @click="toEdit('邮箱','gender',user.email)"/>
+  <van-cell title="手机号码" is-link :value="user.phone" @click="toEdit('手机号码','phone',user.phone)"/>
+  <van-cell title="邮箱" is-link :value="user.email" @click="toEdit('邮箱','email',user.email)"/>
   <van-cell title="星球编号" :value="user.code"/>
   <van-cell title="注册时间" :value="user.createTime.toISOString()"/>
 </template>

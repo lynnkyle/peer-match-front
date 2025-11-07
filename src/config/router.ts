@@ -5,6 +5,7 @@ import User from "../pages/User.vue"
 import Search from "../pages/Search.vue"
 import UserEdit from '../pages/UserEdit.vue'
 import SearchResult from '../pages/SearchResult.vue'
+import UserLogin from "../pages/UserLogin.vue";
 
 
 const router = createRouter({
@@ -29,6 +30,11 @@ const router = createRouter({
             path: '/user',
             name: 'user',
             component: User,
+        },
+        {
+            path: '/user/login',
+            name: 'login',
+            component: UserLogin
         },
         {
             path: '/user/edit',

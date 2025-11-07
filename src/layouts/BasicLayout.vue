@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import 'vant/es/toast/style'
 import {showToast} from "vant";
 import {useRouter} from "vue-router";
 
@@ -36,5 +35,7 @@ const onChange = (index) => showToast(`标签 ${index}`)
 </template>
 
 <style scoped>
-
+#content {
+  padding: 10px 0 80px 0;
+}
 </style>

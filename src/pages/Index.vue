@@ -9,12 +9,15 @@ const userList: Ref<UserType[]> = ref([])
 onMounted(async () => {
   const userListData: UserType[] = await instance.get('/user/recommend',
       {
-        params: {},
+        params: {
+          pageNum: 3,
+          pageSize: 8
+        },
       }
   ).then(res => {
     console.log('/user/recommend succeed', res)
     showSuccessToast("请求成功")
-    return res.data
+    return res.data.records
   }).catch(error => {
     console.log('/user/recommend failed', error)
     showFailToast("请求失败")

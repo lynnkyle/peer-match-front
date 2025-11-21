@@ -10,7 +10,7 @@ onMounted(async () => {
   const userListData: UserType[] = await instance.get('/user/recommend',
       {
         params: {
-          pageNum: 3,
+          pageNum: 1,
           pageSize: 8
         },
       }

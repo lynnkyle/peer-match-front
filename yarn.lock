@@ -693,7 +693,7 @@ tinyglobby@^0.2.15:
     fdir "^6.5.0"
     picomatch "^4.0.3"
 
-typescript@*, typescript@>=5.0.0, typescript@~5.9.3, typescript@5.x:
+typescript@*, typescript@>=5.0.0, typescript@5.x:
   version "5.9.3"
   resolved "https://registry.npmmirror.com/typescript/-/typescript-5.9.3.tgz"
   integrity sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==

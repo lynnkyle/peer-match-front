@@ -7,14 +7,13 @@ const doJoinTeam = () => {
     path: '/team/add'
   })
 }
-
 </script>
 
 <template>
   <div id="team">
     <van-floating-bubble
         axis="xy"
-        icon="chat"
+        icon="plus"
         magnetic="x"
         :gap="{ x: 10, y: 60 }"
         @click="doJoinTeam"

@@ -2,6 +2,7 @@
 import {useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../services/user.ts";
+import dayjs from "dayjs";
 
 const user = ref()
 
@@ -32,8 +33,9 @@ const toEdit = (editLabel, editKey, editValue) => {
     <van-cell title="手机号码" is-link :value="user.phone" @click="toEdit('手机号码','phone',user.phone)"/>
     <van-cell title="邮箱" is-link :value="user.email" @click="toEdit('邮箱','email',user.email)"/>
     <van-cell title="星球编号" :value="user.code"/>
-    <van-cell title="注册时间" :value="user.createTime"/>
+    <van-cell title="注册时间" :value="dayjs(user.createTime).format('YYYY-MM-DD HH:mm:ss')"/>
   </div>
+  <van-empty v-else description="数据为空"/>
 </template>
 
 <style scoped>

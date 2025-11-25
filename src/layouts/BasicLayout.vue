@@ -11,7 +11,6 @@ const onClickLeft = () => {
 const onClickRight = () => {
   router.push("/search")
 }
-const onChange = (index) => showToast(`标签 ${index}`)
 </script>
 
 <template>
@@ -27,7 +26,7 @@ const onChange = (index) => showToast(`标签 ${index}`)
   <div id="content">
     <router-view></router-view>
   </div>
-  <van-tabbar route @change="onChange">
+  <van-tabbar route>
     <van-tabbar-item icon="home-o" name="home" to="/">主页</van-tabbar-item>
     <van-tabbar-item icon="search" name="team" to="/team">队伍</van-tabbar-item>
     <van-tabbar-item icon="friends-o" name="user" to="/user">个人</van-tabbar-item>

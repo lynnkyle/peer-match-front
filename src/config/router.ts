@@ -7,7 +7,7 @@ import UserEdit from '../pages/UserEdit.vue'
 import SearchResult from '../pages/SearchResult.vue'
 import UserLogin from "../pages/UserLogin.vue";
 import TeamAdd from "../pages/TeamAdd.vue";
-
+import TeamUpdate from "../pages/TeamUpdate.vue";
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -31,6 +31,11 @@ const router = createRouter({
             path: '/team/add',
             name: 'teamAdd',
             component: TeamAdd,
+        },
+        {
+            path: '/team/update',
+            name: 'teamUpdate',
+            component: TeamUpdate,
         },
         {
             path: '/user',

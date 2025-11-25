@@ -11,6 +11,6 @@ export type UserType = {
     code?: string;
     profile?: string;
     tags?: string[];
-    isDelete?: number;
-    createTime?: Date;
+    createTime?: string;
+    updateTIME?: string;
 };

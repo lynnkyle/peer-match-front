@@ -16,7 +16,6 @@ onMounted(async () => {
       }
   ).then(res => {
     console.log('/user/recommend succeed', res)
-    showSuccessToast("请求成功")
     return res.data.records
   }).catch(error => {
     console.log('/user/recommend failed', error)
@@ -33,10 +32,9 @@ onMounted(async () => {
 })
 </script>
 <template>
-  <UserCardList :user-list="userList"></UserCardList>
-  <van-empty v-if="!userList || userList.length==0" description="数据为空"/>
-  <div>
-
+  <div id="index">
+    <UserCardList :user-list="userList"></UserCardList>
+    <van-empty v-if="!userList || userList.length==0" description="数据为空"/>
   </div>
 </template>
 <style scoped>

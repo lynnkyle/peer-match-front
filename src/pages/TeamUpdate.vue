@@ -1,10 +1,17 @@
 <script setup lang="ts">
-import {computed, onMounted, reactive, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import instance from "../plugins/axios.ts";
 import {showFailToast, showSuccessToast} from "vant";
 import {useRoute, useRouter} from "vue-router";
 import type {TeamType} from "../models/team";
-import dayjs from "dayjs";
+import {
+  extractDateTimeField,
+  formatDate,
+  modifyDate,
+  formatTime,
+  modifyTime,
+  datePickerMinMax
+} from "../utils/utils.ts";
 
 const route = useRoute()
 const router = useRouter()
@@ -12,52 +19,31 @@ const router = useRouter()
 const updateTeamData = ref<TeamType>({})
 
 // 日期时间选择器
-let date = new Date()
-const year = date.getFullYear();
-const month = date.getMonth();
-const day = date.getDate();
-const hour = date.getHours();
-const minute = date.getMinutes();
-const second = date.getSeconds();
 // 日期选择器
-const showDatePicker = ref(false);
-// const currentDate = ref()
-const currentDate = computed({
-  get() {
-    return dayjs(updateTeamData.value.expireTime).format("YYYY-MM-DD")
-  },
-  set(val) {
-    console.log("val", val)
-    const [year, month, day] = val.split('-').map(Number)
-    const now = dayjs(updateTeamData.value.expireTime).year(year).month(month).date(day)
-    updateTeamData.value.expireTime = now.toISOString()
-  }
+const showDatePicker = ref(false)
+const currentDatePicker = ref<string[]>([])
+const currentDate = computed(() => {
+  return formatDate(updateTeamData.value.expireTime)
 })
-const currentDatePicker = ref([year.toString(), month.toString(), day.toString()])
-const minDate = new Date(year, month, day);
-const maxDate = new Date(year + 3, month, day);
 const dateConfirm = ({selectedValues}) => {
-  console.log("select", selectedValues)
-  let [year, month, day] = selectedValues.map(Number)
-  date.setFullYear(year)
-  date.setMonth(month)
-  date.setDate(day)
-  console.log("date:", date)
+  updateTeamData.value.expireTime = modifyDate(updateTeamData.value.expireTime, selectedValues)
   showDatePicker.value = false
-  updateTeamData.value.expireTime = date.toString()
+}
+const dateCancel = () => {
+  showDatePicker.value = false
 }
 // 时间选择器
-const showTimePicker = ref(false);
-// const currentTime = ref()
-const currentTimePicker = ref([hour.toString(), minute.toString(), second.toString()])
+const showTimePicker = ref(false)
+const currentTimePicker = ref<string[]>([])
+const currentTime = computed(() => {
+  return formatTime(updateTeamData.value.expireTime)
+})
 const timeConfirm = ({selectedValues}) => {
-  currentTime.value = selectedValues.join(':')
+  updateTeamData.value.expireTime = modifyTime(updateTeamData.value.expireTime, selectedValues)
   showTimePicker.value = false
-  date.setHours(selectedValues[0])
-  date.setMinutes(selectedValues[1])
-  date.setSeconds(selectedValues[2])
-  updateTeamData.value.expireTime = date.toJSON()
-  console.log(updateTeamData)
+}
+const timeCancel = () => {
+  showTimePicker.value = false
 }
 // 表单请求
 const onSubmit = async () => {
@@ -91,12 +77,13 @@ onMounted(async () => {
   })
   if (res.code === 20000 && res.data) {
     showSuccessToast("成功获取队伍")
-    console.log(res)
   } else {
     showFailToast(res?.description)
   }
   updateTeamData.value = {...res.data, teamStatus: res.data.teamStatus.toString()}
-  console.log(updateTeamData.value)
+  const {year, month, day, hour, minute, second} = extractDateTimeField(updateTeamData.value.expireTime)
+  currentDatePicker.value = [year, month, day]
+  currentTimePicker.value = [hour, minute, second]
 })
 computed(() => {
 })
@@ -134,10 +121,11 @@ computed(() => {
         <van-date-picker
             title="选择日期"
             v-model="currentDatePicker"
-            :min-date="minDate"
-            :max-date="maxDate"
             :columns-type="['year', 'month', 'day']"
+            :min-date="datePickerMinMax().min"
+            :max-date="datePickerMinMax().max"
             @confirm="dateConfirm"
+            @cancel="dateCancel"
         />
       </van-popup>
       <van-field
@@ -157,6 +145,7 @@ computed(() => {
             v-model="currentTimePicker"
             :columns-type="['hour', 'minute', 'second']"
             @confirm="timeConfirm"
+            @cancel="timeCancel"
         />
       </van-popup>
       <van-field name="radio" label="队伍状态">

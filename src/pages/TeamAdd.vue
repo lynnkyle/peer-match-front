@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import {reactive, ref} from "vue";
+import {computed, reactive, ref} from "vue";
 import instance from "../plugins/axios.ts";
 import {showFailToast, showSuccessToast} from "vant";
 import {useRouter} from "vue-router";
+import {formatDate, modifyDate, datePickerMinMax, formatTime, modifyTime} from "../utils/utils.ts";
 
 const router = useRouter()
 
@@ -16,51 +17,35 @@ const initFormData = {
   "teamStatus": "0",
   "userId": 0
 }
-const addTeamData = reactive({...initFormData})
+const addTeamData = ref({...initFormData})
 
 // 日期时间选择器
 let date = new Date()
-addTeamData.expireTime = date.toJSON()
-const year = date.getFullYear();
-const month = date.getMonth();
-const day = date.getDate();
-const hour = date.getHours();
-const minute = date.getMinutes();
-const second = date.getSeconds();
 // 日期选择器
 const showDatePicker = ref(false);
-const currentDate = ref()
-const currentDatePicker = ref([year.toString(), month.toString(), day.toString()])
-const minDate = new Date(year, month, day);
-const maxDate = new Date(year + 3, month, day);
+const currentDate = computed(() => {
+  return formatDate(addTeamData.value.expireTime)
+})
+const currentDatePicker = ref()
 const dateConfirm = ({selectedValues}) => {
-  currentDate.value = selectedValues.join('-')
+  addTeamData.value.expireTime = modifyDate(addTeamData.value.expireTime, selectedValues)
   showDatePicker.value = false
-  date.setFullYear(selectedValues[0])
-  date.setMonth(selectedValues[1])
-  date.setDate(selectedValues[2])
-  console.log(date)
-  addTeamData.expireTime = date.toJSON()
-  console.log(addTeamData)
 }
 // 时间选择器
 const showTimePicker = ref(false);
-const currentTime = ref()
-const currentTimePicker = ref([hour.toString(), minute.toString(), second.toString()])
+const currentTime = computed(() => {
+  return formatTime(addTeamData.value.expireTime)
+})
+const currentTimePicker = ref()
 const timeConfirm = ({selectedValues}) => {
-  currentTime.value = selectedValues.join(':')
+  addTeamData.value.expireTime = modifyTime(addTeamData.value.expireTime, selectedValues)
   showTimePicker.value = false
-  date.setHours(selectedValues[0])
-  date.setMinutes(selectedValues[1])
-  date.setSeconds(selectedValues[2])
-  addTeamData.expireTime = date.toJSON()
-  console.log(addTeamData)
 }
 // 表单请求
 const onSubmit = async () => {
   const postData = {
     ...addTeamData,
-    teamStatus: Number(addTeamData.teamStatus)
+    teamStatus: Number(addTeamData.value.teamStatus)
   }
   // todo 前端参数校验
   const res = await instance.post('/team/add', postData)
@@ -108,8 +93,8 @@ const onSubmit = async () => {
         <van-date-picker
             title="选择日期"
             v-model="currentDatePicker"
-            :min-date="minDate"
-            :max-date="maxDate"
+            :min-date="datePickerMinMax().min"
+            :max-date="datePickerMinMax().max"
             :columns-type="['year', 'month', 'day']"
             @confirm="dateConfirm"
         />

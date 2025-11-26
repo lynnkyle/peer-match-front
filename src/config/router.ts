@@ -8,6 +8,9 @@ import SearchResult from '../pages/SearchResult.vue'
 import UserLogin from "../pages/UserLogin.vue";
 import TeamAdd from "../pages/TeamAdd.vue";
 import TeamUpdate from "../pages/TeamUpdate.vue";
+import UserUpdate from "../pages/UserUpdate.vue";
+import UserTeamJoin from "../pages/UserTeamJoin.vue";
+import UserTeamCreate from "../pages/UserTeamCreate.vue";
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -48,14 +51,29 @@ const router = createRouter({
             component: UserLogin
         },
         {
+            path: '/user/list',
+            name: 'userResult',
+            component: SearchResult
+        },
+        {
             path: '/user/edit',
             name: 'userEdit',
             component: UserEdit
         },
         {
-            path: '/user/list',
-            name: 'userResult',
-            component: SearchResult
+            path: '/user/update',
+            name: 'userUpdate',
+            component: UserUpdate
+        },
+        {
+            path: '/user/team/join',
+            name: 'userTeamJoin',
+            component: UserTeamJoin
+        },
+        {
+            path: '/user/team/create',
+            name: 'userTeamCreate',
+            component: UserTeamCreate
         }
     ],
 })

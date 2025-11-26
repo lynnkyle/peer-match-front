@@ -3,7 +3,7 @@ import {useRouter} from "vue-router";
 import TeamCardList from "../components/TeamCardList.vue";
 import {onMounted, type Ref, ref} from "vue";
 import type {TeamType} from "../models/team";
-import {listAllTeams} from "../services/team.ts";
+import {listCurrentUserCreateTeams} from "../services/team.ts";
 
 const router = useRouter()
 const doJoinTeam = () => {
@@ -17,12 +17,12 @@ const searchText = ref('')
 
 
 const onSearch = async (val) => {
-  teamList.value = await listAllTeams('searchText', val)
+  teamList.value = await listCurrentUserCreateTeams('searchText', val)
 }
 
 // 钩子函数
 onMounted(async () => {
-  teamList.value = await listAllTeams()
+  teamList.value = await listCurrentUserCreateTeams()
 })
 </script>
 

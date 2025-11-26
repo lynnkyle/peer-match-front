@@ -77,14 +77,24 @@ onMounted(async () => {
           {{ "过期时间:" + dayjs(team.expireTime).format("YYYY-MM-DD HH:mm:ss") }}
         </div>
         <div style="float:right">
+          <van-button size="mini" icon="plus" color="linear-gradient(to right, #ff6034, #ee0a24)"
+                      @click="doJoinTeam(team.id)">
+            加入队伍
+          </van-button>
           <van-button v-if="currentUser.id===team.userId" size="mini" icon="plus"
                       color="linear-gradient(to right, #ff6034, #ee0a24)"
                       @click="doUpdateTeam(team.id)">
             更新队伍
           </van-button>
-          <van-button size="mini" icon="plus" color="linear-gradient(to right, #ff6034, #ee0a24)"
-                      @click="doJoinTeam(team.id)">
-            加入队伍
+          <van-button size="mini" icon="plus"
+                      color="linear-gradient(to right, #ff6034, #ee0a24)"
+                      @click="doDeleteTeam(team.id)">
+            退出队伍
+          </van-button>
+          <van-button v-if="currentUser.id===team.userId" size="mini" icon="plus"
+                      color="linear-gradient(to right, #ff6034, #ee0a24)"
+                      @click="doUpdateTeam(team.id)">
+            退出队伍
           </van-button>
         </div>
       </template>
@@ -93,7 +103,5 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-#team-card-list {
-  --van-card-thumb-size: 100px
-}
+
 </style>

@@ -1,41 +1,18 @@
 <script setup lang="ts">
-import {useRouter} from "vue-router";
-import {onMounted, ref} from "vue";
+
 import {getCurrentUser} from "../services/user.ts";
-import dayjs from "dayjs";
+import {ref, onMounted} from "vue";
 
-const user = ref()
-
+const currentUser = ref()
 onMounted(async () => {
-  user.value = await getCurrentUser()
+  currentUser.value = await getCurrentUser()
 })
-const router = useRouter()
-const toEdit = (editLabel, editKey, editValue) => {
-  router.push({
-    path: "/user/edit",
-    query: {
-      editLabel,
-      editKey,
-      editValue
-    }
-  })
-}
 </script>
 
 <template>
-  <div v-if="user">
-    <van-cell title="昵称" is-link :value="user.userName" @click="toEdit('昵称','userName',user.userName)"/>
-    <van-cell title="账号" is-link :value="user.userAccount" @click="toEdit('账号','userAccount',user.userAccount)"/>
-    <van-cell title="头像" is-link @click="toEdit('头像','gender',user.avatarUrl)">
-      <img :src="user.avatarUrl" alt="" style="height: 48px"/>
-    </van-cell>
-    <van-cell title="性别" is-link :value="user.gender" @click="toEdit('性别','gender',user.gender)"/>
-    <van-cell title="手机号码" is-link :value="user.phone" @click="toEdit('手机号码','phone',user.phone)"/>
-    <van-cell title="邮箱" is-link :value="user.email" @click="toEdit('邮箱','email',user.email)"/>
-    <van-cell title="星球编号" :value="user.code"/>
-    <van-cell title="注册时间" :value="dayjs(user.createTime).format('YYYY-MM-DD HH:mm:ss')"/>
-  </div>
-  <van-empty v-else description="数据为空"/>
+  <van-cell title="个人信息页" :value="currentUser?.userName" is-link to="/user/update"/>
+  <van-cell title="创建的队伍" is-link to="/user/team/create"/>
+  <van-cell title="加入的队伍" is-link to="/user/team/join"/>
 </template>
 
 <style scoped>

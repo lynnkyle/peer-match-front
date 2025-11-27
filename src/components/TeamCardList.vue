@@ -21,7 +21,11 @@ const router = useRouter()
 
 const currentUser = ref({id: 0})
 
-const doJoinTeam = async (teamId: number) => {
+const doJoinTeam = async (teamId: number | undefined) => {
+  if (teamId === undefined) {
+    showFailToast("请求参数teamId为空")
+    return undefined
+  }
   const res = await instance.post('/team/join', {
     "teamId": teamId
   })
@@ -41,6 +45,37 @@ const doUpdateTeam = async (id) => {
   })
 }
 
+const doQuitTeam = async (teamId: number | undefined) => {
+  if (teamId === undefined) {
+    showFailToast("请求参数teamId为空")
+    return undefined
+  }
+  const res = await instance.post('/team/quit', {
+    "teamId": teamId
+  })
+  if (res.code === 20000 && res.data) {
+    showSuccessToast("成功退出队伍")
+    console.log(res)
+  } else {
+    showFailToast(res?.description)
+  }
+}
+
+const doDeleteTeam = async (teamId: number | undefined) => {
+  if (teamId === undefined) {
+    showFailToast("请求参数teamId为空")
+    return undefined
+  }
+  const res = await instance.post('/team/delete', {
+    "id": teamId
+  })
+  if (res.code === 20000 && res.data) {
+    showSuccessToast("成功解散队伍")
+    console.log(res)
+  } else {
+    showFailToast(res?.description)
+  }
+}
 // 钩子函数
 onMounted(async () => {
   currentUser.value = await getCurrentUser()
@@ -88,13 +123,13 @@ onMounted(async () => {
           </van-button>
           <van-button size="mini" icon="plus"
                       color="linear-gradient(to right, #ff6034, #ee0a24)"
-                      @click="doDeleteTeam(team.id)">
+                      @click="doQuitTeam(team.id)">
             退出队伍
           </van-button>
           <van-button v-if="currentUser.id===team.userId" size="mini" icon="plus"
                       color="linear-gradient(to right, #ff6034, #ee0a24)"
-                      @click="doUpdateTeam(team.id)">
-            退出队伍
+                      @click="doDeleteTeam(team.id)">
+            解散队伍
           </van-button>
         </div>
       </template>

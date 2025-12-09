@@ -4,7 +4,7 @@ import {useRoute} from 'vue-router'
 import {onMounted, type Ref, ref} from "vue";
 import instance from "../plugins/axios.ts";
 import qs from 'qs';
-import UserCardList from "../components/UserCardList.vue";
+import UserCardList from "../components/CardList/UserCardList.vue";
 
 const route = useRoute()
 const {tags} = route.query

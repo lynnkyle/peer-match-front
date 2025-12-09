@@ -11,10 +11,11 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    FloatingPopover: typeof import('./src/components/FloatingPopover.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TeamCardList: typeof import('./src/components/TeamCardList.vue')['default']
-    UserCardList: typeof import('./src/components/UserCardList.vue')['default']
+    TeamCardList: typeof import('./src/components/CardList/TeamCardList.vue')['default']
+    UserCardList: typeof import('./src/components/CardList/UserCardList.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanCalendar: typeof import('vant/es')['Calendar']
     VanCard: typeof import('vant/es')['Card']
@@ -32,11 +33,14 @@ declare module 'vue' {
     VanForm: typeof import('vant/es')['Form']
     VanIcon: typeof import('vant/es')['Icon']
     VanNavBar: typeof import('vant/es')['NavBar']
+    VanOverlay: typeof import('vant/es')['Overlay']
+    VanPopover: typeof import('vant/es')['Popover']
     VanPopup: typeof import('vant/es')['Popup']
     VanRadio: typeof import('vant/es')['Radio']
     VanRadioGroup: typeof import('vant/es')['RadioGroup']
     VanRow: typeof import('vant/es')['Row']
     VanSearch: typeof import('vant/es')['Search']
+    VanSkeleton: typeof import('vant/es')['Skeleton']
     VanStepper: typeof import('vant/es')['Stepper']
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']

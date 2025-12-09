@@ -1,12 +1,12 @@
 <script setup lang="ts">
 
-import type {TeamType} from "../models/team";
-import {teamStatusEnum} from "../constants/team.ts";
+import type {TeamType} from "../../models/team";
+import {teamStatusEnum} from "../../constants/team.ts";
 import dayjs from "dayjs";
-import instance from "../plugins/axios.ts";
+import instance from "../../plugins/axios.ts";
 import {showFailToast, showSuccessToast} from "vant";
 import {onMounted, ref} from "vue";
-import {getCurrentUser} from "../services/user.ts";
+import {getCurrentUser} from "../../services/user.ts";
 import {useRouter} from "vue-router";
 
 interface TeamCardList {
@@ -112,23 +112,28 @@ onMounted(async () => {
           {{ "过期时间:" + dayjs(team.expireTime).format("YYYY-MM-DD HH:mm:ss") }}
         </div>
         <div style="float:right">
-          <van-button size="mini" icon="plus" color="linear-gradient(to right, #ff6034, #ee0a24)"
-                      @click="doJoinTeam(team.id)">
+          <van-button size="mini" icon="plus"
+                      color="linear-gradient(to right, #ff6034, #ee0a24)"
+                      @click="doJoinTeam(team.id)"
+                      v-if="currentUser.id!==team.userId">
             加入队伍
           </van-button>
-          <van-button v-if="currentUser.id===team.userId" size="mini" icon="plus"
+          <van-button size="mini" icon="plus"
                       color="linear-gradient(to right, #ff6034, #ee0a24)"
-                      @click="doUpdateTeam(team.id)">
+                      @click="doUpdateTeam(team.id)"
+                      v-if="currentUser.id===team.userId">
             更新队伍
           </van-button>
           <van-button size="mini" icon="plus"
                       color="linear-gradient(to right, #ff6034, #ee0a24)"
-                      @click="doQuitTeam(team.id)">
+                      @click="doQuitTeam(team.id)"
+          >
             退出队伍
           </van-button>
-          <van-button v-if="currentUser.id===team.userId" size="mini" icon="plus"
+          <van-button size="mini" icon="plus"
                       color="linear-gradient(to right, #ff6034, #ee0a24)"
-                      @click="doDeleteTeam(team.id)">
+                      @click="doDeleteTeam(team.id)"
+                      v-if="currentUser.id===team.userId">
             解散队伍
           </van-button>
         </div>

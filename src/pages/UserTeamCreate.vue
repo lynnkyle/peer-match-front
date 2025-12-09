@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router";
-import TeamCardList from "../components/TeamCardList.vue";
+import TeamCardList from "../components/CardList/TeamCardList.vue";
 import {onMounted, type Ref, ref} from "vue";
 import type {TeamType} from "../models/team";
 import {listCurrentUserCreateTeams} from "../services/team.ts";

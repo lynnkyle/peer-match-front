@@ -1,26 +1,16 @@
 <script setup lang="ts">
 import {onMounted, ref, type Ref} from "vue";
 import type {UserType} from "../models/user";
-import instance from "../plugins/axios.ts";
-import {showFailToast, showSuccessToast} from "vant";
-import UserCardList from "../components/UserCardList.vue";
+import UserCardList from "../components/CardList/UserCardList.vue";
+import FloatingPopover from "../components/FloatingPopover.vue";
+import {recommendUser} from "../services/user.ts";
 
 const userList: Ref<UserType[]> = ref([])
+const loading = ref(true)
 onMounted(async () => {
-  const userListData: UserType[] = await instance.get('/user/recommend',
-      {
-        params: {
-          pageNum: 1,
-          pageSize: 8
-        },
-      }
-  ).then(res => {
-    console.log('/user/recommend succeed', res)
-    return res.data.records
-  }).catch(error => {
-    console.log('/user/recommend failed', error)
-    showFailToast("请求失败")
-  })
+  loading.value = true
+  const userListPage = await recommendUser()
+  const userListData: UserType[] = userListPage.records
   if (userListData) {
     userListData.forEach(user => {
       if (user.tags) {
@@ -29,12 +19,18 @@ onMounted(async () => {
     })
     userList.value = userListData
   }
+  loading.value = false
 })
+
+//FloatingPopover
+const popoverAction = [{index: 0, text: '用户匹配'}]
+
 </script>
 <template>
   <div id="index">
-    <UserCardList :user-list="userList"></UserCardList>
+    <UserCardList :user-list="userList" :loading="loading"></UserCardList>
     <van-empty v-if="!userList || userList.length==0" description="数据为空"/>
+    <FloatingPopover :popover-action="popoverAction"></FloatingPopover>
   </div>
 </template>
 <style scoped>

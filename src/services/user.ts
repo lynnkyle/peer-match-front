@@ -14,3 +14,31 @@ export const getCurrentUser = async () => {
     }
     return null
 }
+export const recommendUser = async () => {
+    const res = await instance.get('/user/recommend',
+        {
+            params: {
+                pageNum: 1,
+                pageSize: 8
+            },
+        }
+    )
+    if (res.code === 20000) {
+        return res.data
+    }
+    return null
+}
+
+export const matchUser = async () => {
+    const res = await instance.get('/user/match',
+        {
+            params: {
+                num: 10
+            }
+        }
+    )
+    if (res.code === 20000) {
+        return res.data
+    }
+    return null
+}

@@ -66,7 +66,9 @@ const doSelect = async (action) => {
         @offset-change="doOffSetChange">
       <van-popover v-model:show="showPopover" :actions="props.popoverAction" :placement="placement" @select="doSelect">
         <template #reference>
-          <van-icon name="user-o" size="24"/>
+          <div style="width: 48px;height: 48px;display: flex;align-items: center;justify-content: center;">
+            <van-icon name="user-o" size="28"/>
+          </div>
         </template>
       </van-popover>
     </van-floating-bubble>

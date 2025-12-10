@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import type {TeamType} from "../../models/team";
 import {teamStatusEnum} from "../../constants/team.ts";
 import dayjs from "dayjs";
@@ -22,19 +21,19 @@ const router = useRouter()
 const currentUser = ref({id: 0})
 
 const doJoinTeam = async (teamId: number | undefined) => {
-  if (teamId === undefined) {
-    showFailToast("请求参数teamId为空")
-    return undefined
-  }
-  const res = await instance.post('/team/join', {
-    "teamId": teamId
-  })
-  if (res.code === 20000 && res.data) {
-    showSuccessToast("成功加入队伍")
-    console.log(res)
-  } else {
-    showFailToast(res?.description)
-  }
+  // if (teamId === undefined) {
+  //   showFailToast("请求参数teamId为空")
+  //   return undefined
+  // }
+  // const res = await instance.post('/team/join', {
+  //   "teamId": teamId
+  // })
+  // if (res.code === 20000 && res.data) {
+  //   showSuccessToast("成功加入队伍")
+  //   console.log(res)
+  // } else {
+  //   showFailToast(res.description === "" ? res.message : res.description)
+  // }
 }
 const doUpdateTeam = async (id) => {
   router.push({
@@ -115,25 +114,26 @@ onMounted(async () => {
           <van-button size="mini" icon="plus"
                       color="linear-gradient(to right, #ff6034, #ee0a24)"
                       @click="doJoinTeam(team.id)"
-                      v-if="currentUser.id!==team.userId">
+                      v-if="!team.hasJoin">
             加入队伍
           </van-button>
           <van-button size="mini" icon="plus"
                       color="linear-gradient(to right, #ff6034, #ee0a24)"
                       @click="doUpdateTeam(team.id)"
-                      v-if="currentUser.id===team.userId">
+                      v-if="currentUser?.id===team.userId">
             更新队伍
           </van-button>
           <van-button size="mini" icon="plus"
                       color="linear-gradient(to right, #ff6034, #ee0a24)"
                       @click="doQuitTeam(team.id)"
+                      v-if="currentUser?.id!==team.userId&&team.hasJoin"
           >
             退出队伍
           </van-button>
           <van-button size="mini" icon="plus"
                       color="linear-gradient(to right, #ff6034, #ee0a24)"
                       @click="doDeleteTeam(team.id)"
-                      v-if="currentUser.id===team.userId">
+                      v-if="currentUser?.id===team.userId">
             解散队伍
           </van-button>
         </div>

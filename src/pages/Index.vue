@@ -7,10 +7,15 @@ import {recommendUser} from "../services/user.ts";
 
 const userList: Ref<UserType[]> = ref([])
 const loading = ref(true)
+
+//FloatingPopover
+const popoverAction = [{index: 0, text: '用户匹配'}]
+
+// 钩子函数
 onMounted(async () => {
   loading.value = true
   const userListPage = await recommendUser()
-  const userListData: UserType[] = userListPage.records
+  const userListData: UserType[] = userListPage?.records
   if (userListData) {
     userListData.forEach(user => {
       if (user.tags) {
@@ -21,9 +26,6 @@ onMounted(async () => {
   }
   loading.value = false
 })
-
-//FloatingPopover
-const popoverAction = [{index: 0, text: '用户匹配'}]
 
 </script>
 <template>

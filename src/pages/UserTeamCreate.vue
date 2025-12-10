@@ -17,7 +17,7 @@ const searchText = ref('')
 
 
 const onSearch = async (val) => {
-  teamList.value = await listCurrentUserCreateTeams('searchText', val)
+  teamList.value = await listCurrentUserCreateTeams({'searchText': val})
 }
 
 // 钩子函数

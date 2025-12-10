@@ -1,13 +1,7 @@
 import instance from "../plugins/axios.ts";
 import {showFailToast} from "vant";
 
-export const listTeams = async (url = '', key = '', val = '') => {
-    let param: Record<string, any> | null = null
-    if (key != '') {
-        param = {
-            [key]: val
-        }
-    }
+export const listTeams = async (url = '', param = {}) => {
     const res = await instance.get(url, {
         params: param
     })
@@ -19,14 +13,14 @@ export const listTeams = async (url = '', key = '', val = '') => {
     return null
 }
 
-export const listAllTeams = async (key = '', val = '') => {
-    return listTeams('/team/list', key, val)
+export const listAllTeams = async (param = {}) => {
+    return listTeams('/team/list', param)
 }
 
-export const listCurrentUserCreateTeams = async (key = '', val = '') => {
-    return listTeams('/team/list/current/create', key, val)
+export const listCurrentUserCreateTeams = async (param = {}) => {
+    return listTeams('/team/list/current/create', param)
 }
 
-export const listCurrentUserJoinTeams = async (key = '', val = '') => {
-    return listTeams('/team/list/current/join', key, val)
+export const listCurrentUserJoinTeams = async (param = {}) => {
+    return listTeams('/team/list/current/join', param)
 }

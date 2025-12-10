@@ -20,7 +20,6 @@ const initFormData = {
 const addTeamData = ref({...initFormData})
 
 // 日期时间选择器
-let date = new Date()
 // 日期选择器
 const showDatePicker = ref(false);
 const currentDate = computed(() => {

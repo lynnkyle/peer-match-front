@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {reactive} from "vue";
 import instance from "../plugins/axios.ts";
 import {showToast} from "vant";
 
+const route = useRoute()
 const router = useRouter()
 const userLoginInfo = reactive({
   userAccount: "",
   userPassword: ""
 })
 const onSubmit = async () => {
-  const res = await instance.post('/user/login', {
+  await instance.post('/user/login', {
     'userAccount': userLoginInfo.userAccount,
     'userPassword': userLoginInfo.userPassword
   }).then((res) => {
     showToast(
         '登录成功'
     )
-    router.replace("/")
-    return res.data
+    const redirectUrl = route.query?.redirect as string ?? '/';
+    window.location.href = redirectUrl;
   })
-  console.log('res', res)
 };
 </script>
 

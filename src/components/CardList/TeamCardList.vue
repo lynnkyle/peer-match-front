@@ -7,12 +7,14 @@ import {showFailToast, showSuccessToast} from "vant";
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../../services/user.ts";
 import {useRouter} from "vue-router";
+import InputDialog from "../InputDialog.vue";
+import {joinTeam} from "../../services/team.ts";
 
-interface TeamCardList {
+interface TeamCardListProps {
   teamList: TeamType[]
 }
 
-const props = withDefaults(defineProps<TeamCardList>(), {
+const props = withDefaults(defineProps<TeamCardListProps>(), {
   teamList: () => [] as TeamType[]
 })
 
@@ -20,26 +22,23 @@ const router = useRouter()
 
 const currentUser = ref({id: 0})
 
-const doJoinTeam = async (teamId: number | undefined) => {
-  // if (teamId === undefined) {
-  //   showFailToast("请求参数teamId为空")
-  //   return undefined
-  // }
-  // const res = await instance.post('/team/join', {
-  //   "teamId": teamId
-  // })
-  // if (res.code === 20000 && res.data) {
-  //   showSuccessToast("成功加入队伍")
-  //   console.log(res)
-  // } else {
-  //   showFailToast(res.description === "" ? res.message : res.description)
-  // }
+const doJoinTeam = async (team: TeamType) => {
+  joinTeamId.value = team.id;
+  if (team.teamStatus === 0) {
+    const data = await joinTeam({"teamId": joinTeamId.value})
+    if (data) {
+      showSuccessToast("加入队伍成功")
+    }
+  } else if (team.teamStatus === 2) {
+    show.value = true
+  }
+
 }
-const doUpdateTeam = async (id) => {
+const doUpdateTeam = async (teamId: number | undefined) => {
   router.push({
     path: '/team/update',
     query: {
-      id: id
+      id: teamId
     }
   })
 }
@@ -75,6 +74,30 @@ const doDeleteTeam = async (teamId: number | undefined) => {
     showFailToast(res?.description)
   }
 }
+
+// InputDialog
+const show = ref(false)
+const password = ref('')
+const joinTeamId = ref()
+const doConfirm = async () => {
+  const param = {
+    "teamId": joinTeamId.value,
+    "password": password.value
+  }
+  const data = await joinTeam(param)
+  if (data) {
+    showSuccessToast("成功加入队伍")
+    show.value = false
+    joinTeamId.value = ''
+  }
+  password.value = ''
+}
+const doCancel = () => {
+  show.value = false
+  password.value = ''
+  joinTeamId.value = ''
+}
+
 // 钩子函数
 onMounted(async () => {
   currentUser.value = await getCurrentUser()
@@ -113,7 +136,7 @@ onMounted(async () => {
         <div style="float:right">
           <van-button size="mini" icon="plus"
                       color="linear-gradient(to right, #ff6034, #ee0a24)"
-                      @click="doJoinTeam(team.id)"
+                      @click="doJoinTeam(team)"
                       v-if="!team.hasJoin">
             加入队伍
           </van-button>
@@ -139,6 +162,8 @@ onMounted(async () => {
         </div>
       </template>
     </van-card>
+    <InputDialog :show="show" v-model:text="password" title="队伍密码" type="password" label="密码:"
+                 @confirm="doConfirm" @cancel="doCancel"></InputDialog>
   </div>
 </template>
 

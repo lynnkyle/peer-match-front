@@ -12,6 +12,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     FloatingPopover: typeof import('./src/components/FloatingPopover.vue')['default']
+    InputDialog: typeof import('./src/components/InputDialog.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TeamCardList: typeof import('./src/components/CardList/TeamCardList.vue')['default']
@@ -26,6 +27,7 @@ declare module 'vue' {
     VanDateTime: typeof import('vant/es')['DateTime']
     VanDatetimePicker: typeof import('vant/es')['DatetimePicker']
     VanDateTimePicker: typeof import('vant/es')['DateTimePicker']
+    VanDialog: typeof import('vant/es')['Dialog']
     VanDivider: typeof import('vant/es')['Divider']
     VanEmpty: typeof import('vant/es')['Empty']
     VanField: typeof import('vant/es')['Field']

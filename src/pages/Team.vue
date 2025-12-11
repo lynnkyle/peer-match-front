@@ -20,7 +20,7 @@ const onSearch = async (val) => {
 }
 // 标签栏
 const activeName = ref("public")
-const doTabChange = async (name) => {
+const doTabChange = async (name="public") => {
   if (name === "public") {
     allTeamList.value = await listAllTeams({'teamStatus': 0})
   } else if (name === "secret") {
@@ -30,7 +30,7 @@ const doTabChange = async (name) => {
 
 // 钩子函数
 onMounted(async () => {
-  allTeamList.value = await listAllTeams()
+  doTabChange()
 })
 </script>
 

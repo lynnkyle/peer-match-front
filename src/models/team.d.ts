@@ -9,6 +9,7 @@ export type TeamType = {
     expireTime?: string;
     teamStatus?: number;
     createUser?: UserType;
+    members?: UserType[];
     hasJoin?: boolean;
     createTime?: string;
     updateTime?: string;

@@ -7,11 +7,11 @@ import type {UserType} from "../models/user";
 
 
 //props
-interface Props {
+interface FloatingPopoverProps {
   popoverAction: PopoverAction[]
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<FloatingPopoverProps>(), {
   popoverAction: () => [] as PopoverAction[],
 })
 

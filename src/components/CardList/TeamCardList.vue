@@ -123,15 +123,15 @@ onMounted(async () => {
       </template>
       <template #price>
         <div>
-          {{ "最大人数:" + team.maxNum }}
+          {{ "队伍人数: " + team?.members?.length + " / " + team.maxNum }}
         </div>
       </template>
       <template #bottom>
         <div>
-          {{ "发布时间:" + dayjs(team.createTime).format("YYYY-MM-DD HH:mm:ss") }}
+          {{ "发布时间: " + dayjs(team.createTime).format("YYYY-MM-DD HH:mm:ss") }}
         </div>
         <div>
-          {{ "过期时间:" + dayjs(team.expireTime).format("YYYY-MM-DD HH:mm:ss") }}
+          {{ "过期时间: " + dayjs(team.expireTime).format("YYYY-MM-DD HH:mm:ss") }}
         </div>
         <div style="float:right">
           <van-button size="mini" icon="plus"

@@ -4,8 +4,11 @@ FROM nginx
 # 复制代码到镜像
 WORKDIR /usr/share/nginx/html/
 USER root
+
 COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
-COPY ./dist  /usr/share/nginx/html/
+
+COPY ./user-center/dist  /usr/share/nginx/html/user-center/
+COPY ./peer-match/dist  /usr/share/nginx/html/peer-match/
 
 # 占用的端口号
 EXPOSE 80

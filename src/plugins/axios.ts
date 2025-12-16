@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const isDev = process.env.NODE_ENV === 'development';
+
 const instance = axios.create({
-    baseURL: 'http://localhost:8080/api'
+    baseURL: isDev ? 'http://localhost:8080/api' : 'http://peer-match-backend.linzeyuan.site/api'
 });
 
 // 后台请求携带Cookie

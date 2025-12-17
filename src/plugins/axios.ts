@@ -3,7 +3,7 @@ import axios from "axios";
 const isDev = process.env.NODE_ENV === 'development';
 
 const instance = axios.create({
-    baseURL: isDev ? 'http://localhost:8080/api' : 'http://118.25.157.191:8081/api'
+    baseURL: isDev ? 'http://localhost:8080/api' : 'http://118.25.157.191/api'
 });
 
 // 后台请求携带Cookie

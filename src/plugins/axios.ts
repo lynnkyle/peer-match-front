@@ -3,7 +3,7 @@ import axios from "axios";
 const isDev = process.env.NODE_ENV === 'development';
 
 const instance = axios.create({
-    baseURL: isDev ? 'http://localhost:8080/api' : 'http://118.25.157.191/api'
+    baseURL: isDev ? 'http://localhost:8080/api' : 'http://118.25.157.191/peer-match-backend/api'
 });
 
 // 后台请求携带Cookie
@@ -21,7 +21,7 @@ instance.interceptors.response.use(function (response) {
     console.log(response);
     if (response?.data?.code === 40100) {
         const redirectUrl = window.location.href;
-        window.location.href = `/user/login?redirect=${redirectUrl}`;
+        window.location.href = `/peer-match/user/login?redirect=${redirectUrl}`;
     }
     return response.data;
 }, function (error) {

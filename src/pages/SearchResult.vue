@@ -9,6 +9,7 @@ import UserCardList from "../components/CardList/UserCardList.vue";
 const route = useRoute()
 const {tags} = route.query
 const userList: Ref<UserType[]> = ref([])
+const loading = ref(true)
 onMounted(async () => {
   const userListData: UserType[] = await instance.get('/user/search/tags',
       {
@@ -32,12 +33,13 @@ onMounted(async () => {
       }
     })
     userList.value = userListData
+    loading.value = false
   }
 })
 </script>
 
 <template>
-  <user-card-list :user-list="userList"></user-card-list>
+  <UserCardList :user-list="userList" :loading="loading"></UserCardList>
   <van-empty v-if="!userList || userList.length==0" description="无符合搜索条件用户"/>
   <div>
 

@@ -87,7 +87,7 @@ export const routes = [
     }
 ]
 export const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory("peer-match"),
     routes: routes
 })
 export default router;
